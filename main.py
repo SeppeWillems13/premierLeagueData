@@ -1,5 +1,3 @@
-import base64
-
 import pandas as pd
 import plotly.express as px
 import streamlit as st
@@ -7,23 +5,25 @@ import streamlit as st
 # Load the CSV data
 df = pd.read_csv('csv_files/eplmatches.csv')
 
+
 def convert_df(df):
     return df.to_csv(index=False).encode('utf-8')
+
 
 # create a new page
 st.sidebar.markdown('## Navigation')
 page = st.sidebar.radio('Go to', ['Home', 'DataManipulation'])
 if page == 'Home':
-    #make a home page for streamlit
+    # make a home page for streamlit
     st.markdown('## Home')
     st.markdown('Welcome to the EPL Data App')
     st.markdown('This app is a work in progress')
     st.markdown('## Data')
     st.markdown('The data is from the 1993-94 season to the 2019-20 season')
-    #show the data in a table format on the home page for the user to see what they are working with
+    # show the data in a table format on the home page for the user to see what they are working with
     st.dataframe(df)
     st.markdown('## Download')
-    #add a download button for the user to download the data
+    # add a download button for the user to download the data
     csv = convert_df(df)
     file_name = 'file.csv'
     st.download_button(
@@ -46,7 +46,7 @@ if page == 'DataManipulation':
     if team:
         df = df[(df['Home'].isin(team)) | (df['Away'].isin(team))]
 
-    #filter Wk like numbers not 1,10,..
+    # filter Wk like numbers not 1,10,..
     df['Wk'] = df['Wk'].astype(str).str.replace(r'\D', '').astype(int)
     df = df.sort_values(by=['Wk'], ascending=True)
 
@@ -82,5 +82,3 @@ if page == 'DataManipulation':
         "text/csv",
         key='download-csv'
     )
-
-
