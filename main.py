@@ -39,6 +39,7 @@ if page == 'DataManipulation':
 
     # add a selectbox to manipulate the df before downloading for filtering per season on a multi-select
     season = st.selectbox('Select a season?', (df['Season_End_Year'].unique()))
+
     df = df[df['Season_End_Year'] == season]
     # add a multi-select to manipulate the df before downloading for filtering per team
     team = st.multiselect('Select a team?', (df['Home'].unique()))
